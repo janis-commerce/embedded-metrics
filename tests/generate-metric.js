@@ -24,16 +24,18 @@ describe('generateMetric()', () => {
 
 	const fullMetricDirective = ({
 		metricUnit,
-		metricResolution
+		metricResolution,
+		dimensions
 	} = {}) => {
 
 		const Unit = metricUnit ?? 'Count';
+		const Dimensions = dimensions ?? [
+			['clientCode']
+		];
 
 		return {
 			Namespace: 'Sample',
-			Dimensions: [
-				['clientCode']
-			],
+			...Dimensions && { Dimensions },
 			Metrics: [{
 				Name: 'PublishedProducts',
 				...Unit && { Unit },
@@ -44,12 +46,13 @@ describe('generateMetric()', () => {
 
 	const fullMetricDirectiveOutput = ({
 		metricUnit,
-		metricResolution
+		metricResolution,
+		dimensions
 	} = {}) => ({
 		_aws: {
 			CloudWatchMetrics: [{
 				Namespace: 'Sample',
-				Dimensions: [
+				Dimensions: dimensions || [
 					['clientCode']
 				],
 				Metrics: [{
@@ -90,6 +93,14 @@ describe('generateMetric()', () => {
 			generator(clientCode, 10);
 
 			sinon.assert.calledOnceWithExactly(console.log, JSON.stringify(fullMetricDirectiveOutput()));
+		});
+
+		it('Should add an empty Dimensions array if Dimensions are not passed', () => {
+			const generator = generateMetric(fullMetricDirective({ dimensions: false }));
+			generator(10);
+
+			const { clientCode: _, ...expectedOutput } = fullMetricDirectiveOutput({ dimensions: [] });
+			sinon.assert.calledOnceWithExactly(console.log, JSON.stringify(expectedOutput));
 		});
 
 		it('Should honor a custom metric unit if it is passed', () => {

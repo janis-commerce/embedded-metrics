@@ -1,6 +1,6 @@
 {
   "name": "@janiscommerce/embedded-metrics",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A wrapper to make it easier to use AWS Cloudwatch Embedded Metric Format (EMF)",
   "main": "lib/index.js",
   "scripts": {

@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- Coverage reports are now uploaded to Coveralls, by migrating the GitHub Actions workflows to the shared janis-commerce ones [JCN-551](https://janiscommerce.atlassian.net/browse/JCN-551)
 
 ## [1.1.0] - 2026-09-09
 ### Added
